@@ -1,4 +1,12 @@
-*
-!.gitignore
-!code.asm
-!go.sh
+tmp.*
+
+*.asc
+*.dat
+*.mem
+*.mif
+*.pdf
+
+__pycache__/
+assembler_v1d/
+modified_simpleCPU_v1d/
+zip/
