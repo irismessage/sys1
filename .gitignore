@@ -1,0 +1,4 @@
+*
+!.gitignore
+!code.asm
+!go.sh
