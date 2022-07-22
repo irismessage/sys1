@@ -1,5 +1,3 @@
 start:
-    move ra 255
-    store ra 4095
-exit:
-    jump exit
+    move ra 0xff
+    store ra 0xfff
