@@ -32,33 +32,34 @@
 start:
     jump rows
 alternate:
-    # colour alternator subroutine
-    # checks 0 or 1 from rb
-    # puts correct colour in rc
+# colour alternator subroutine
+# checks 0 or 1 from rb
+# puts correct colour in rc
     and rb 1
     jumpnz purple
     yellow:
-        # rb is 0
+# rb is 0
         move rb 1
         move rc 65523
         ret
     purple:
-        # rb is 1
+# rb is 1
         move rb 0
         move rc 52031
         ret
 
 rows:
-    # pixel memory pointer
-    # 1024 + 24*4 + 4
+# pixel memory pointer
+# 1024 + 24*4 + 4
     move ra 1124
-    # colour alternator counter
+# colour alternator counter
     move rb 1
     move rc 65523
 rowsloop:
     store rc (ra)
     call alternate
-    xor ra 1141
+# do while ra is not 1141
+    and ra 66677
     jumpnz rowsloop
 
 write:
