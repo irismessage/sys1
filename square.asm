@@ -58,8 +58,11 @@ rows:
 rowsloop:
     store rc (ra)
     call alternate
+# increment ra
+    add ra 1
 # do while ra is not 1141
-    and ra 66677
+    move rd ra
+    and rd 66677
     jumpnz rowsloop
 
 write:
