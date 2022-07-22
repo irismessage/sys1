@@ -6,14 +6,14 @@
 # cc66ff
 # 11001100 01100110 11111111
 # 11001    011001   11111
-# 1100101100111111
-# 52031
+# 11001011 00111111
+# 203      63
 # yellow
 # ffff99
 # 11111111 11111111 10011001
 # 11111    111111   10011
-# 1111111111110011
-# 65523
+# 11111111 11110011
+# 255      243
 
 # SQUARE
 # (04,04) yellow      (20,04) purple
@@ -33,36 +33,36 @@ start:
     jump rows
 alternate:
 # colour alternator subroutine
-# checks 0 or 1 from rb
-# puts correct colour in rc
-    and rb 1
-    jumpnz purple
+# swaps out the 16bit colour split between rb and rc
+    sub rb 255
+    jumpz purple
     yellow:
-# rb is 0
-        move rb 1
-        move rc 65523
+        move rb 255
+        move rc 243
         ret
     purple:
-# rb is 1
-        move rb 0
-        move rc 52031
+        move rb 203
+        move rc 63
         ret
 
 rows:
 # pixel memory pointer
 # 1024 + 24*4 + 4
     move ra 1124
-# colour alternator counter
-    move rb 1
-    move rc 65523
+# start on yellow
+    move rb 255
+    move rc 253
 rowsloop:
-    store rc (ra)
-    call alternate
-# increment ra
+# write pixel
+    store rb (ra)
     add ra 1
-# do while ra is not 1141
+    store rc (ra)
+    add ra 1
+    call alternate  # switch colour
+# do while ra is not 1057
+# 1056 = 1024 + 16 * 2
     move rd ra
-    and rd 66677
+    sub rd 1057
     jumpnz rowsloop
 
 write:
