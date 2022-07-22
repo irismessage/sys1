@@ -16,6 +16,7 @@
 # 65523
 
 # SQUARE
+# square is 16x16
 # (04,04) yellow      (20,04) purple
 #                ⌜  ⌝
 #                ⌞  ⌟
@@ -30,22 +31,27 @@
 # bin() hex() 0x 0b
 
 start:
+# load colours
+    yellow:
+        .data 65523
+    purple:
+        .data 52031
     jump rows
 alternate:
 # colour alternator subroutine
 # checks 0 or 1 from rb
 # puts correct colour in rc
     and rb 1
-    jumpnz purple
-    yellow:
+    jumpnz loadpurple
+    loadyellow:
 # rb is 0
         move rb 1
-        move rc 65523
+        load rc yellow
         ret
-    purple:
+    loadpurple:
 # rb is 1
         move rb 0
-        move rc 52031
+        load rc purple
         ret
 
 rows:
@@ -54,7 +60,7 @@ rows:
     move ra 1124
 # colour alternator counter
     move rb 1
-    move rc 65523
+    load rc yellow  # start at yellow
 rowsloop:
     store rc (ra)
     call alternate
@@ -62,7 +68,7 @@ rowsloop:
     add ra 1
 # do while ra is not 1141
     move rd ra
-    and rd 66677
+    sub rd 
     jumpnz rowsloop
 
 write:
