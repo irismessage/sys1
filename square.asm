@@ -41,7 +41,7 @@ alternate:
 # colour alternator subroutine
 # swaps colour in rc
 # uses ra to load
-    sub rc yellow
+    subm rc yellow
     jumpz loadpurple
     loadyellow:
 # rb is 0
