@@ -67,11 +67,7 @@ staprite:
 endprite:
     .data 1524  # start + 15*24
 
-stap:
-    .data 0
 endp:
-    .data 0
-startcolour:
     .data 0
 
 
@@ -97,16 +93,10 @@ alternate:
 
 # lines subroutine
 # called once each for top, bottom, left, and right
-liner:
 # ra - loads
 # rb - pixel address
 # rc - colour
 # rd - increment
-    load ra stap
-    move rb ra
-# load start colour
-    load ra startcolour
-    move rc ra
 linesloop:
     store rc (rb)
     call alternate
@@ -125,39 +115,39 @@ start:
 # rows
     move rd 1
 # top row
+    load ra yellow
+    move rc ra
     load ra staptop
-    store ra stap
+    move rb ra
     load ra endptop
     store ra endp
-    load ra yellow
-    store ra startcolour
-    call liner
+    call linesloop
 # bottom row
+    load ra purple
+    move rc ra
     load ra stapbot
-    store ra stap
+    move rb ra
     load ra endpbot
     store ra endp
-    load ra purple
-    store ra startcolour
-    call liner
+    call linesloop
 # columns
     move rd 24
 # left column
+# start colour of purple same as bottom row, so omitted
     load ra stapleft
-    store ra stap
+    move rb ra
     load ra endpleft
-    store ra endpbot
-# start colour of purple same as bottom row
-    call liner
+    store ra endp  
+    call linesloop
 # right column
-    load ra staprite
-    store ra stap
-    load ra endprite
-    store ra endprite
     load ra yellow
-    store ra startcolour
-    call liner
-    
+    move rc ra
+    load ra staprite
+    move rb ra
+    load ra endprite
+    store ra endp
+    call linesloop
+
 
 jump write
 
@@ -168,3 +158,5 @@ write:
     load ra writeadr
     move rb 0xff
     store rb (ra)
+exit:
+    jump exit
