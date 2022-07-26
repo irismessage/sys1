@@ -60,9 +60,11 @@ rows:
 # rc - colour
 # pixel memory pointer
 # 1024 + 24*4 + 4
-    pixel:
+    stapixel:
         .data 1124
-    load ra pixel
+    endpixel:
+        .data 1141
+    load ra stapixel
     move rb ra
 # colour alternator counter
     load ra yellow
@@ -74,7 +76,7 @@ rowsloop:
     add rb 1
 # do while pixel is not 1141
     move ra rb
-    subm ra pixel
+    subm ra endpixel
     jumpnz rowsloop
 
 write:
