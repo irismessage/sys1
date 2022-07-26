@@ -61,11 +61,11 @@ endpbot:
 stapleft:
     .data 1148  # 1024 + 24*5 + 4
 endpleft:
-    .data 1508  # start + 15*24
+    .data 1484  # start + 14*24
 staprite:
-    .data 1164  # 1024 + 24*5 + 20
+    .data 1163  # 1024 + 24*5 + 19
 endprite:
-    .data 1524  # start + 15*24
+    .data 1499  # start + 14*24
 
 endp:
     .data 0
@@ -103,6 +103,10 @@ linesloop:
     store rc (rb)
     call alternate
 # increment pixel address
+# not I would implement the other add addressing mode,
+# but I was highly depressed so missed most of this stuff
+# and just need to pass the resit with 40% so
+# pure assembly will be enough to make it run
     move ra rb
     addm ra incr
     move rb ra
