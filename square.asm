@@ -64,7 +64,7 @@ endpleft:
     .data 1508  # start + 15*24
 staprite:
     .data 1164  # 1024 + 24*5 + 20
-endpleft:
+endprite:
     .data 1524  # start + 15*24
 
 stap:
@@ -107,7 +107,7 @@ liner:
 # load start colour
     load ra startcolour
     move rc ra
-linessloop:
+linesloop:
     store rc (rb)
     call alternate
 # increment pixel address
@@ -147,7 +147,7 @@ start:
     store ra stap
     load ra endpleft
     store ra endpbot
-    # start colour of purple same as bottom row
+# start colour of purple same as bottom row
     call liner
 # right column
     load ra staprite
