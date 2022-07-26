@@ -57,7 +57,9 @@ alternate:
 rows:
 # pixel memory pointer
 # 1024 + 24*4 + 4
-    move ra 1124
+    pixel:
+        .data 1124
+    load ra pixel
 # colour alternator counter
     move rb 1
     load rc yellow  # start at yellow
@@ -72,7 +74,8 @@ rowsloop:
     jumpnz rowsloop
 
 write:
+    .data 0xfff
     move ra 0xff
-    store ra 0xfff
+    store ra write
 exit:
     jump exit
