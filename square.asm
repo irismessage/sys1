@@ -57,6 +57,15 @@ stapbot:
 # end pixel, bottom
 endpbot:
     .data 1500  # start + 16
+# 15 * 24 = 360
+stapleft:
+    .data 1148  # 1024 + 24*5 + 4
+endpleft:
+    .data 1508  # start + 15*24
+staprite:
+    .data 1164  # 1024 + 24*5 + 20
+endpleft:
+    .data 1524  # start + 15*24
 
 stap:
     .data 0
@@ -86,32 +95,35 @@ alternate:
 # end of alternate subroutine
 
 
-# rows subroutine
-# called once for top and once for bottom
-rowr:
+# lines subroutine
+# called once each for top, bottom, left, and right
+liner:
 # ra - loads
 # rb - pixel address
 # rc - colour
+# rd - increment
     load ra stap
     move rb ra
 # load start colour
     load ra startcolour
     move rc ra
-rowsloop:
+linessloop:
     store rc (rb)
     call alternate
 # increment pixel address
-    add rb 1
+    add rb rd
 # do while pixel is not 1141
     move ra rb
     subm ra endp
-    jumpnz rowsloop
+    jumpnz linesloop
     ret
 # end of rows subroutine
 
 
 # program entry point
 start:
+# rows
+    move rd 1
 # top row
     load ra staptop
     store ra stap
@@ -119,7 +131,7 @@ start:
     store ra endp
     load ra yellow
     store ra startcolour
-    call rowr
+    call liner
 # bottom row
     load ra stapbot
     store ra stap
@@ -127,7 +139,24 @@ start:
     store ra endp
     load ra purple
     store ra startcolour
-    call rowr
+    call liner
+# columns
+    move rd 24
+# left column
+    load ra stapleft
+    store ra stap
+    load ra endpleft
+    store ra endpbot
+    # start colour of purple same as bottom row
+    call liner
+# right column
+    load ra staprite
+    store ra stap
+    load ra endprite
+    store ra endprite
+    load ra yellow
+    store ra startcolour
+    call liner
     
 
 jump write
