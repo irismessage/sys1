@@ -69,6 +69,8 @@ endprite:
 
 endp:
     .data 0
+incr:
+    .data 1
 
 
 # colour alternator subroutine
@@ -101,9 +103,10 @@ linesloop:
     store rc (rb)
     call alternate
 # increment pixel address
-    add rb rd
-# do while pixel is not 1141
     move ra rb
+    addm ra incr
+    move rb ra
+# do while pixel is not endp
     subm ra endp
     jumpnz linesloop
     ret
@@ -113,7 +116,6 @@ linesloop:
 # program entry point
 start:
 # rows
-    move rd 1
 # top row
     load ra yellow
     move rc ra
@@ -131,9 +133,11 @@ start:
     store ra endp
     call linesloop
 # columns
-    move rd 24
+    move ra 24
+    store ra incr
 # left column
-# start colour of purple same as bottom row, so omitted
+    load ra purple
+    move rc ra
     load ra stapleft
     move rb ra
     load ra endpleft
