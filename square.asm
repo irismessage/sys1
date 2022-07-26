@@ -31,12 +31,12 @@
 # bin() hex() 0x 0b
 
 start:
+    jump rows
 # load colours
     yellow:
         .data 65523
     purple:
         .data 52031
-    jump rows
 alternate:
 # colour alternator subroutine
 # swaps colour in rc
@@ -54,16 +54,17 @@ alternate:
         move rc ra
         ret
 
-rows:
-# ra - loads
-# rb - pixel address
-# rc - colour
 # pixel memory pointer
 # 1024 + 24*4 + 4
     stapixel:
         .data 1124
     endpixel:
         .data 1141
+
+rows:
+# ra - loads
+# rb - pixel address
+# rc - colour
     load ra stapixel
     move rb ra
 # colour alternator counter
@@ -79,8 +80,11 @@ rowsloop:
     subm ra endpixel
     jumpnz rowsloop
 
-write:
+jump write
+
+writeadr:
     .data 0xfff
-    load ra write
+write:
+    load ra writeadr
     move rb 0xff
     store rb (ra)
