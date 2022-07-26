@@ -39,38 +39,42 @@ start:
     jump rows
 alternate:
 # colour alternator subroutine
-# checks 0 or 1 from rb
-# puts correct colour in rc
-    and rb 1
-    jumpnz loadpurple
+# swaps colour in rc
+# uses ra to load
+    sub rc yellow
+    jumpz loadpurple
     loadyellow:
 # rb is 0
-        move rb 1
-        load rc yellow
+        load ra yellow
+        move rc ra  # always keep ra free for loading
         ret
     loadpurple:
 # rb is 1
-        move rb 0
-        load rc purple
+        load ra purple
+        move rc ra
         ret
 
 rows:
+# ra - loads
+# rb - pixel address
+# rc - colour
 # pixel memory pointer
 # 1024 + 24*4 + 4
     pixel:
         .data 1124
     load ra pixel
+    move rb ra
 # colour alternator counter
-    move rb 1
-    load rc yellow  # start at yellow
+    load ra yellow
+    move rc ra  # start at yellow
 rowsloop:
-    store rc (ra)
+    store rc (rb)
     call alternate
-# increment ra
-    add ra 1
-# do while ra is not 1141
-    move rd ra
-    sub rd 
+# increment pixel address
+    add rb 1
+# do while pixel is not 1141
+    move ra rb
+    subm ra pixel
     jumpnz rowsloop
 
 write:
