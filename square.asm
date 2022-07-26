@@ -79,7 +79,6 @@ rowsloop:
 
 write:
     .data 0xfff
-    move ra 0xff
-    store ra write
-exit:
-    jump exit
+    load ra write
+    move rb 0xff
+    store rb (ra)
