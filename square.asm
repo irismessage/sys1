@@ -41,7 +41,8 @@ alternate:
 # colour alternator subroutine
 # swaps colour in rc
 # uses ra to load
-    subm rc yellow
+    move ra rc
+    subm ra yellow
     jumpz loadpurple
     loadyellow:
 # rb is 0
@@ -59,7 +60,7 @@ alternate:
     stapixel:
         .data 1124
     endpixel:
-        .data 1141
+        .data 1140
 
 rows:
 # ra - loads
