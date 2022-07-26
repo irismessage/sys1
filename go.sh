@@ -1,5 +1,5 @@
 #!/bin/bash
-dir="$HOME/src/SYS1/"
+dir="$HOME/src/SYS1"
 assembler="$dir/assembler_v1d/Linux/simpleCPUv1d_as.py"
 pattern="*.asm"
 files=( $pattern )
