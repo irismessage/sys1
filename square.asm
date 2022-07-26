@@ -50,17 +50,19 @@ staptop:
     .data 1124  # 1024 + 24*4 + 4
 # end pixel, top
 endptop:
-    .data 1140  # 1124 + 16
+    .data 1140  # start + 16
 # start pixel, bottom
 stapbot:
-    .data 1508  # 1024 + 24*20 + 4
+    .data 1484  # 1024 + 24*19 + 4
 # end pixel, bottom
 endpbot:
-    .data 1524  # 1508 + 16
+    .data 1500  # start + 16
 
 stap:
     .data 0
 endp:
+    .data 0
+startcolour:
     .data 0
 
 
@@ -92,9 +94,9 @@ rowr:
 # rc - colour
     load ra stap
     move rb ra
-# colour alternator counter
-    load ra yellow
-    move rc ra  # start at yellow
+# load start colour
+    load ra startcolour
+    move rc ra
 rowsloop:
     store rc (rb)
     call alternate
@@ -115,12 +117,16 @@ start:
     store ra stap
     load ra endptop
     store ra endp
+    load ra yellow
+    store ra startcolour
     call rowr
 # bottom row
     load ra stapbot
     store ra stap
     load ra endpbot
     store ra endp
+    load ra purple
+    store ra startcolour
     call rowr
     
 
