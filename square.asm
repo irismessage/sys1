@@ -25,20 +25,47 @@
 # MEMORY
 # image data starts at 1024
 # image is 24x24
-# each pixel is 16 bits
+# each pixel is 16 bits - one address
+
+# regs and mems are 16 bit
+# ops are 8 bit???
+# use .data and load to use >8bit values
 
 # PYTHON
 # bin() hex() 0x 0b
 
-start:
-    jump rows
-# load colours
-    yellow:
-        .data 65523
-    purple:
-        .data 52031
-alternate:
+
+jump start
+
+
+# colours
+yellow:
+    .data 65523
+purple:
+    .data 52031
+
+# pixel addresses
+# start pixel, top
+staptop:
+    .data 1124  # 1024 + 24*4 + 4
+# end pixel, top
+endptop:
+    .data 1140  # 1124 + 16
+# start pixel, bottom
+stapbot:
+    .data 1508  # 1024 + 24*20 + 4
+# end pixel, bottom
+endpbot:
+    .data 1524  # 1508 + 16
+
+stap:
+    .data 0
+endp:
+    .data 0
+
+
 # colour alternator subroutine
+alternate:
 # swaps colour in rc
 # uses ra to load
     move ra rc
@@ -54,19 +81,16 @@ alternate:
         load ra purple
         move rc ra
         ret
+# end of alternate subroutine
 
-# pixel memory pointer
-# 1024 + 24*4 + 4
-    stapixel:
-        .data 1124
-    endpixel:
-        .data 1140
 
-rows:
+# rows subroutine
+# called once for top and once for bottom
+rowr:
 # ra - loads
 # rb - pixel address
 # rc - colour
-    load ra stapixel
+    load ra stap
     move rb ra
 # colour alternator counter
     load ra yellow
@@ -78,11 +102,31 @@ rowsloop:
     add rb 1
 # do while pixel is not 1141
     move ra rb
-    subm ra endpixel
+    subm ra endp
     jumpnz rowsloop
+    ret
+# end of rows subroutine
+
+
+# program entry point
+start:
+# top row
+    load ra staptop
+    store ra stap
+    load ra endptop
+    store ra endp
+    call rowr
+# bottom row
+    load ra stapbot
+    store ra stap
+    load ra endpbot
+    store ra endp
+    call rowr
+    
 
 jump write
 
+# save image
 writeadr:
     .data 0xfff
 write:
