@@ -51,19 +51,21 @@ nr:
 
 
 # example runthrough
-# px 1000011001100100
+# from the real first pixel of the thing
+# px 1100110111110110
 # 3a = px[0:8]
-# 3a 10000110         <- L
+# 3a 11001101         <- L
 # 3b = px[8:16]
-# 3b         01100100 <- R
+# 3b         11110110 <- R
 # 3c = F(3b)
-# 3c         00100110
+# 3c         01101111
 # 3d = 3a xor 3c
-# 3d         10100000 -> NR
+# 3d         10100010 -> NR
 # 3e = F(3d)
-# 3e         00000101
+# 3e         01000101
 # 3f = 3b xor 3e
-# 3f 11000001         -> NL
+# 3f 10110011         -> NL
+# cr 1011001101000101
 
 # 16bit pixel starts in ra
 # see notation in 3-feistel.png
