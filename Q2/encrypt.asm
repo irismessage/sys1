@@ -63,6 +63,7 @@ feistel:
     move rb ra
     load ra nr
     xor ra rb  # finally encrypted 16bit pixel is in ra
+    ret
 
 
 pixadr:
@@ -75,18 +76,16 @@ endimg:
 
 start:
     load ra pixadr
-    load ra (ra)  # load pixel from pixadr
+    move rb ra
+    load ra (rb)  # load pixel from pixadr
     call feistel
-    move rb ra  # encrypt pixel and move it to ra
+    move rb ra  # encrypt pixel and move it to rb
     load ra pixadr
-    move rc ra
-    move ra rb
-    store ra (rc)  # save pixel back to image
-    move ra rc
+    store rb (ra)  # save pixel back to image
     add ra 1  # increment pixel address
-    store ra pixadr
+    store ra pixadr  # save new pixel address
     subm ra endimg
-    jumpnz start
+    jumpnz start  # loop
 
 
 # save image
