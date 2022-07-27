@@ -14,6 +14,10 @@ start:
 trap:
   jumpu trap        # end
 
+
+# divides by three (3)
+# argument: ra
+# return: ra
 divide:
   ...               # add your code here
 
