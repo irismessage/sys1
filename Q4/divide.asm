@@ -22,7 +22,13 @@ trap:
 # argument: ra
 # return: ra
 divide:
+    move rb 0
+    loop:
+        add rb 1
+        sub ra 3
+        jumpc end
+        jump loop
+    end:
+        sub rb 1
+        move ra rb
     ret
-
-
-data:
