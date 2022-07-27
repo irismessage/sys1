@@ -1,3 +1,6 @@
+jump start
+
+
 # subroutine
 # reverses the lower 8 bits in the ra register
 # the reversed word is grown in the rb register
@@ -21,6 +24,9 @@ reverse:
     move rb ra
     ret
 
+right:
+    .data 0
+# self explan-atory.
 roleight:
     rol ra
     rol ra
@@ -60,6 +66,30 @@ feistel:
     call roleight
     load rb nr
     xor ra rb  # finally encrypted 16bit pixel is in ra
+
+
+pixadr:
+    .data 1024
+# 24 * 24 = 576
+# 1024 + 576 = 1600
+endimg:
+    .data 1600
+
+
+start:
+    load ra pixadr
+    load ra (ra)  # load pixel from pixadr
+    call feistel
+    move rb ra  # encrypt pixel and move it to ra
+    load ra pixadr
+    move rc ra
+    move ra rb
+    store ra (rc)  # save pixel back to image
+    move ra rc
+    add ra 1  # increment pixel address
+    store ra pixadr
+    subm ra endimg
+    jumpnz start
 
 
 # save image
