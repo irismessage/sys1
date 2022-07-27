@@ -37,7 +37,8 @@
 
 jump start
 
-
+writeadr:
+    .data 0xfff
 # colours
 yellow:
     .data 65523
@@ -157,14 +158,9 @@ start:
     call linesloop
 
 
-jump write
-
 # save image
-writeadr:
-    .data 0xfff
-write:
-    load ra writeadr
-    move rb 0xff
-    store rb (ra)
+load ra writeadr
+move rb 0xff
+store rb (ra)
 exit:
     jump exit
