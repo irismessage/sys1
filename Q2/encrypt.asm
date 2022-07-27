@@ -1,6 +1,10 @@
 jump start
 
 
+revend:
+    .data 128
+
+
 # subroutine
 # reverses the lower 8 bits in the ra register
 # the reversed word is grown in the rb register
@@ -9,23 +13,24 @@ jump start
 # todo cha cha slide joke
 reverse:
     call roleight
+    move rb 0
     move rc 1  # 2^i
+    move rd ra  # original goes in rd
     revloop:
-        rol ra
+        rol rd  # todo: will this carry?
         jumpc ycarry
         jump fcarry
         ycarry:
             xor rb rc
         fcarry:
         rol rc
-        move rd rc
-        sub rd 128
+        move ra rc
+        subm ra revend  # ra used for checking loop end
         jumpnz revloop
     move rb ra
     ret
 
-right:
-    .data 0
+
 # self explan-atory.
 roleight:
     rol ra
