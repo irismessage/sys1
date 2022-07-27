@@ -40,10 +40,6 @@ roleight:
 
 writeadr:
     .data 0xfff
-maskl:
-    .data 240  # 0b11110000
-maskr:
-    .data 15  # 0b00001111
 pixel:
     .data 0
 nr:
@@ -64,7 +60,8 @@ feistel:
     load ra pixel
     xor ra rb # ~ 3f <- ra ~
     call roleight
-    load rb nr
+    move rb ra
+    load ra nr
     xor ra rb  # finally encrypted 16bit pixel is in ra
 
 
