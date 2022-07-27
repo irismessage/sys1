@@ -78,8 +78,7 @@ feistel:
     and ra 255 # ~ ra <- 3a ~ upper bits are in lower ra
     xor ra rb  # ~ ra <- 3d ~ first xor
     store ra nr
-    call reverse  # ~ ra <- 3e ~ second reverse
-    move rb ra
+    call reverse  # ~ rb <- 3e ~ second reverse
     load ra pixel
     and ra 255
     xor ra rb # ~ 3f <- ra ~
