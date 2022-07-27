@@ -17,11 +17,11 @@ reverse:
     move rc 1  # 2^i
     move rd ra  # original goes in rd
     revloop:
-        rol rd  # todo: will this carry?
-        jumpc ycarry
-        jump fcarry
-        ycarry:
-            xor rb rc
+        rol rd
+        move ra rd
+        and ra 1  # branch if lowest bit is set
+        jumpz fcarry
+            xor rb rc  # set bit in rb
         fcarry:
         rol rc
         move ra rc
