@@ -9,25 +9,24 @@ revend:
 # reverses the lower 8 bits in the ra register
 # the reversed word is grown in the rb register
 # the rc register counts a bit going up
-# rd is also used for checking when loop ends
-# todo cha cha slide joke
+# ra is copied to rd, and ra is used for looping
 reverse:
     call roleight
     move rb 0
     move rc 1  # 2^i
     move rd ra  # original goes in rd
-    revloop:
+    takeitbacknowyall:
         rol rd
         move ra rd
         and ra 1  # branch if lowest bit is set
-        jumpz fcarry
+        jumpz onehopthistime
             xor rb rc  # set bit in rb
-        fcarry:
+        onehopthistime:
         rol rc
         move ra rc
         subm ra revend  # ra used for checking loop end
-        jumpnz revloop
-    move rb ra
+        jumpnz takeitbacknowyall
+    move ra rb
     ret
 
 
@@ -43,8 +42,6 @@ roleight:
     rol ra
     ret
 
-writeadr:
-    .data 0xfff
 pixel:
     .data 0
 nr:
@@ -77,6 +74,8 @@ pixadr:
 # 1024 + 576 = 1600
 endimg:
     .data 1600
+writeadr:
+    .data 0xfff
 
 
 start:
